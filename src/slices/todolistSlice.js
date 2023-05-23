@@ -13,19 +13,16 @@ export const todoListSlice=createSlice({
             state.input=action.payload
         },
         setTasks:function(state, action){
-            if(state.editing==false) state.tasks=[...state.tasks, state.input];
-            else{
-                state.tasks=state.tasks.map((task, index)=>{
-                    if(index==state.editing){
-                        return state.input;
-                    } 
-                    return task
-                });
-                state.editing=false
-
+            
+            if(state.editing!==false)
+            {
+                state.tasks[state.editing] = state.input
+                state.editing = false
+            }else{
+                state.tasks=[...state.tasks, state.input];
+                state.input = ""
             }
 
-            state.input=""
         },
         setDeleteTask:function(state, action){
         state.tasks=state.tasks.filter((task, id)=>{
