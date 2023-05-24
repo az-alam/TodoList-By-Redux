@@ -6,7 +6,8 @@ export const todoListSlice=createSlice({
     initialState:{
         input:"",
         tasks:[],
-        editing:false
+        editing:false,
+        taskdone:[]
         },
     reducers:{
         setInput:function(state, action){
@@ -27,14 +28,27 @@ export const todoListSlice=createSlice({
         setDeleteTask:function(state, action){
         state.tasks=state.tasks.filter((task, id)=>{
             return id !==action.payload
+        });
+        state.taskdone=state.taskdone.filter((task, id)=>{
+            if(id ==action.payload){
+                return false
+            }
+            else{
+                return true
+            }
         })
+        
         },
         setEditTask:function(state, action){
             state.editing=action.payload;
             state.input=state.tasks[action.payload]
+        },
+
+        setTasksDone:function(state, action){
+            state.taskdone=[...state.taskdone, action.payload]
         }
 
     }
 })
-export const {setInput, setTasks, setDeleteTask, setEditTask}=todoListSlice.actions
+export const {setInput, setTasks, setDeleteTask, setEditTask, setTasksDone}=todoListSlice.actions
 export default todoListSlice.reducer
